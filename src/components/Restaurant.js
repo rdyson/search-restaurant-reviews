@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
+import Review from './Review';
 
 class Restaurant extends Component {
   render() {
-    const { name, address, price, reviews } = this.props.details;
-    const reviewsArray = Object.values(reviews);
+    const { name, address, price, lat, lng } = this.props.details;
     return (
       <div>
         <h2>
           {name} ({price})
         </h2>
         <p>{address}</p>
+        <p>
+          {lat}, {lng}
+        </p>
 
         <ul>
-          {reviewsArray.map(review => (
-            <li key={review}>{review}</li>
+          {this.props.reviews.map(review => (
+            <Review review={review} />
           ))}
         </ul>
       </div>

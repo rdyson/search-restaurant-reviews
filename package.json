@@ -4,9 +4,11 @@
   "private": true,
   "dependencies": {
     "firebase": "^5.3.1",
+    "geolib": "^2.0.24",
     "re-base": "^4.0.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
+    "react-geolocated": "^2.4.0",
     "react-scripts": "1.1.4"
   },
   "scripts": {
