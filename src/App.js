@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import Restaurant from './components/Restaurant';
 import Geolocation from './components/Geolocation';
+import geolib from 'geolib';
 import './App.css';
 import base from './base';
-import { geolocated } from 'react-geolocated';
 
 class App extends Component {
   state = {
     restaurants: {},
-    reviews: {}
+    reviews: {},
+    lat: '',
+    lng: ''
   };
 
   componentDidMount() {
@@ -28,15 +30,27 @@ class App extends Component {
     );
   }
 
+  // TODO: Understand this type of function
+  setLocation = (lat, lng) => {
+    if (!this.state.lat && !this.state.lng) {
+      this.setState({
+        lat,
+        lng
+      });
+    }
+  };
+
   render() {
     return (
       <div>
-        <Geolocation />
+        <Geolocation setLocation={this.setLocation} />
         {Object.keys(this.state.restaurants).map(key => (
           <Restaurant
             key={key}
             details={this.state.restaurants[key]}
             reviews={this.getReviews(key)}
+            currentLat={this.state.lat}
+            currentLng={this.state.lng}
           />
         ))}
       </div>

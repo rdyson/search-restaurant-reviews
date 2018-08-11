@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
 import Review from './Review';
+import geolib from 'geolib';
 
 class Restaurant extends Component {
   render() {
     const { name, address, price, lat, lng } = this.props.details;
+    const currentLat = this.props.currentLat;
+    const currentLng = this.props.currentLng;
+
     return (
       <div>
         <h2>
           {name} ({price})
         </h2>
-        <p>{address}</p>
         <p>
-          {lat}, {lng}
+          {address} (
+          {Math.round(
+            geolib.getDistanceSimple(
+              { latitude: lat, longitude: lng },
+              { latitude: currentLat, longitude: currentLng }
+            ) / 1000
+          )}
+          km away)
         </p>
 
         <ul>
