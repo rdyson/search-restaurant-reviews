@@ -40,8 +40,9 @@ class App extends Component {
     if (previousState.restaurants !== this.state.restaurants) {
       const restaurantsNearby = [...this.state.restaurants]
         .filter(key => key)
-        .map(function(el) {
+        .map(function(el, index) {
           var object = Object.assign({}, el);
+          object.restaurantId = index;
           object.distance = geolib.getDistanceSimple(
             { latitude: lat, longitude: lng },
             { latitude: el.lat, longitude: el.lng }
@@ -58,6 +59,7 @@ class App extends Component {
   }
 
   getReviews(restaurantId) {
+    console.log(restaurantId);
     return this.state.reviews.filter(
       review => review.restaurantId === parseInt(restaurantId)
     );
@@ -78,13 +80,15 @@ class App extends Component {
       <div>
         <Geolocation setLocation={this.setLocation} />
         {Object.keys(this.state.restaurantsNearby).map(key => (
-          <Restaurant
-            key={key}
-            details={this.state.restaurantsNearby[key]}
-            reviews={this.getReviews(key)}
-            currentLat={this.state.lat}
-            currentLng={this.state.lng}
-          />
+          <div>
+            <Restaurant
+              key={key}
+              details={this.state.restaurantsNearby[key]}
+              reviews={this.getReviews(
+                this.state.restaurantsNearby[key].restaurantId
+              )}
+            />
+          </div>
         ))}
       </div>
     );
