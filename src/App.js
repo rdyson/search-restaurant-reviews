@@ -54,7 +54,7 @@ class App extends Component {
         .sort(function(a, b) {
           return a.distance - b.distance;
         })
-        .slice(0, 20);
+        .slice(0, 30);
       this.setState({
         restaurantsNearby: restaurantsNearby
       });
