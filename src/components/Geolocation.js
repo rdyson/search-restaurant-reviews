@@ -19,7 +19,6 @@ class Geolocation extends React.Component {
     ) : this.props.coords ? (
       <div>
         {/* You’re at {this.props.coords.latitude} {this.props.coords.longitude} */}
-        <a href="/">Show me vegan noms</a>
       </div>
     ) : (
       <div>Getting location data&hellip; </div>
@@ -31,5 +30,6 @@ export default geolocated({
   positionOptions: {
     enableHighAccuracy: false
   },
-  userDecisionTimeout: 5000
+  userDecisionTimeout: 5000,
+  maximumAge: 1
 })(Geolocation);
