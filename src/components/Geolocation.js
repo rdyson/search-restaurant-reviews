@@ -18,7 +18,8 @@ class Geolocation extends React.Component {
       <div>Geolocation is not enabled</div>
     ) : this.props.coords ? (
       <div>
-        You’re at {this.props.coords.latitude} {this.props.coords.longitude}
+        {/* You’re at {this.props.coords.latitude} {this.props.coords.longitude} */}
+        <a href="/">Show me vegan noms</a>
       </div>
     ) : (
       <div>Getting location data&hellip; </div>

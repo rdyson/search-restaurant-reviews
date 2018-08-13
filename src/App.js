@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Restaurant from './components/Restaurant';
 import Geolocation from './components/Geolocation';
-import './App.css';
 import geolib from 'geolib';
 import { geolocated } from 'react-geolocated';
+import './App.css';
 import base from './base';
 
 class App extends Component {
@@ -16,6 +16,13 @@ class App extends Component {
   };
 
   componentDidMount() {
+    geolocated({
+      positionOptions: {
+        enableHighAccuracy: false
+      },
+      userDecisionTimeout: 5000
+    })(Geolocation);
+
     this.reviewsRef = base.syncState('reviews', {
       context: this,
       state: 'reviews'
@@ -27,17 +34,12 @@ class App extends Component {
   }
 
   componentDidUpdate(previousProps, previousState) {
-    geolocated({
-      positionOptions: {
-        enableHighAccuracy: false
-      },
-      userDecisionTimeout: 5000
-    })(Geolocation);
+    if (
+      this.state.lat &&
+      previousState.restaurants !== this.state.restaurants
+    ) {
+      const { lat, lng } = this.state;
 
-    const lat = this.state.lat;
-    const lng = this.state.lng;
-
-    if (previousState.restaurants !== this.state.restaurants) {
       const restaurantsNearby = [...this.state.restaurants]
         .filter(key => key)
         .map(function(el, index) {
@@ -51,7 +53,8 @@ class App extends Component {
         })
         .sort(function(a, b) {
           return a.distance - b.distance;
-        });
+        })
+        .slice(0, 20);
       this.setState({
         restaurantsNearby: restaurantsNearby
       });
@@ -59,9 +62,8 @@ class App extends Component {
   }
 
   getReviews(restaurantId) {
-    console.log(restaurantId);
     return this.state.reviews.filter(
-      review => review.restaurantId === parseInt(restaurantId)
+      review => review.restaurantId === Number(restaurantId)
     );
   }
 
@@ -78,11 +80,12 @@ class App extends Component {
   render() {
     return (
       <div>
+        <h1>Vegan Options Miami</h1>
+        <p>“Yes we have vegan options, Rob.”</p>
         <Geolocation setLocation={this.setLocation} />
         {Object.keys(this.state.restaurantsNearby).map(key => (
           <div>
             <Restaurant
-              key={key}
               details={this.state.restaurantsNearby[key]}
               reviews={this.getReviews(
                 this.state.restaurantsNearby[key].restaurantId
