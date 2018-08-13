@@ -19,7 +19,7 @@ class Geolocation extends React.Component {
     ) : this.props.coords ? (
       <div>
         {/* You’re at {this.props.coords.latitude} {this.props.coords.longitude} */}
-        <a href="/">Show me vegan noms</a>
+        Nothing? <a href="/">Show me vegan noms</a>
       </div>
     ) : (
       <div>Getting location data&hellip; </div>
