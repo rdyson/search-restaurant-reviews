@@ -10,7 +10,7 @@
     "react-dom": "^16.4.2",
     "react-geolocated": "^2.4.0",
     "react-scripts": "1.1.4",
-    "serve": "^9.4.2"
+    "serve": "^10.1.2"
   },
   "scripts": {
     "start": "serve --single ./build",
